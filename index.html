@@ -1,1 +1,270 @@
-<!DOCTYPE html><html style="height: 100%;"><body style="height: 100%; margin: 0;"><iframe src="https://copilotstudio.microsoft.com/environments/Default-9ef36566-f756-4f11-9c5f-307c10f409f9/bots/cre46_untitledagent_pXyJXc/webchat?__version__=2&enableFileAttachment=false&cliAgent=true" frameborder="0" style="width: 100%; height: 100%; border: 0;"></iframe></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>연정이와 교복 이야기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky-top: #b9dcf7;
+      --sky-bottom: #eef6fd;
+      --navy: #1f3557;
+      --pink: #e2557f;
+      --pink-soft: #f9d3df;
+      --card: #ffffff;
+      --sub: #4f5f78;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--navy);
+      background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 70%, #ffffff 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 배경 구름 */
+    .cloud {
+      position: fixed;
+      background: #ffffff;
+      border-radius: 999px;
+      opacity: 0.85;
+      filter: blur(1px);
+      z-index: 0;
+    }
+    .cloud::before, .cloud::after {
+      content: "";
+      position: absolute;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+    .cloud.c1 { width: 220px; height: 60px; top: 60px; left: -40px; }
+    .cloud.c1::before { width: 110px; height: 110px; top: -55px; left: 40px; }
+    .cloud.c1::after { width: 80px; height: 80px; top: -35px; left: 120px; }
+    .cloud.c2 { width: 260px; height: 70px; top: 140px; right: -60px; }
+    .cloud.c2::before { width: 130px; height: 130px; top: -65px; left: 50px; }
+    .cloud.c2::after { width: 90px; height: 90px; top: -40px; left: 150px; }
+    .cloud.c3 { width: 180px; height: 50px; bottom: 80px; left: 8%; opacity: 0.6; }
+    .cloud.c3::before { width: 90px; height: 90px; top: -45px; left: 30px; }
+    .cloud.c3::after { width: 60px; height: 60px; top: -25px; left: 100px; }
+
+    /* 연꽃 장식 */
+    .lotus {
+      position: fixed;
+      z-index: 0;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .lotus.l1 { width: 90px; bottom: 24px; right: 24px; }
+    .lotus.l2 { width: 60px; top: 24px; left: 46%; opacity: 0.35; }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    /* 상단 소개 */
+    .intro {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #ffffff;
+      box-shadow: 0 6px 18px rgba(226, 85, 127, 0.25);
+      flex-shrink: 0;
+      background: var(--pink-soft);
+    }
+    .title-small {
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 1.5rem;
+      color: var(--pink);
+      margin: 0;
+      line-height: 1;
+    }
+    .title {
+      font-weight: 900;
+      font-size: 1.45rem;
+      margin: 4px 0 2px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+    .title em {
+      font-style: normal;
+      color: var(--pink);
+    }
+    .school {
+      font-size: 0.8rem;
+      color: var(--sub);
+      margin: 0;
+    }
+
+    .poster { display: none; }
+    .title, .title-small, footer { word-break: keep-all; }
+    @media (max-width: 899px) {
+      .lotus.l2 { display: none; }
+      .title { font-size: 1.25rem; }
+      .chat-head span { display: none; }
+      footer { font-size: 1.1rem; }
+    }
+
+    /* 채팅 카드 */
+    .chat-card {
+      background: var(--card);
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(31, 53, 87, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 72vh;
+      border: 3px solid #ffffff;
+    }
+    .chat-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: linear-gradient(90deg, var(--pink-soft), #fdeef3);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .chat-head img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ffffff;
+    }
+    .chat-head span {
+      font-family: 'Nanum Pen Script', cursive;
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: var(--pink);
+      margin-left: auto;
+    }
+    .chat-card iframe {
+      flex: 1;
+      width: 100%;
+      min-height: 520px;
+      border: 0;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 1.3rem;
+      color: var(--sub);
+      padding-bottom: 8px;
+    }
+
+    /* 넓은 화면: 왼쪽 포스터, 오른쪽 채팅 */
+    @media (min-width: 900px) {
+      .wrap {
+        grid-template-columns: 1fr 1.05fr;
+        grid-template-areas:
+          "poster intro"
+          "poster chat"
+          "footer footer";
+        grid-template-rows: auto 1fr auto;
+        column-gap: 32px;
+        padding: 36px 24px;
+      }
+      .intro { grid-area: intro; }
+      .chat-card { grid-area: chat; min-height: 560px; }
+      footer { grid-area: footer; }
+      .poster {
+        display: block;
+        grid-area: poster;
+        align-self: start;
+        position: sticky;
+        top: 36px;
+      }
+      .poster img {
+        width: 100%;
+        border-radius: 24px;
+        border: 6px solid #ffffff;
+        box-shadow: 0 14px 36px rgba(31, 53, 87, 0.2);
+        display: block;
+        transform: rotate(-1.5deg);
+      }
+      .poster p {
+        font-family: 'Nanum Pen Script', cursive;
+        font-size: 1.6rem;
+        color: var(--pink);
+        text-align: center;
+        margin: 18px 0 0;
+      }
+      .avatar { width: 92px; height: 92px; }
+      .title { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+
+  <svg class="lotus l1" viewBox="0 0 100 70" aria-hidden="true">
+    <g fill="#e2557f">
+      <path d="M50 8 C60 25 60 45 50 62 C40 45 40 25 50 8Z"/>
+      <path d="M50 62 C35 55 22 40 20 22 C35 28 46 42 50 62Z" opacity=".8"/>
+      <path d="M50 62 C65 55 78 40 80 22 C65 28 54 42 50 62Z" opacity=".8"/>
+      <path d="M50 62 C30 62 12 55 4 42 C22 40 40 48 50 62Z" opacity=".6"/>
+      <path d="M50 62 C70 62 88 55 96 42 C78 40 60 48 50 62Z" opacity=".6"/>
+    </g>
+  </svg>
+  <svg class="lotus l2" viewBox="0 0 100 70" aria-hidden="true">
+    <g fill="#e2557f">
+      <path d="M50 8 C60 25 60 45 50 62 C40 45 40 25 50 8Z"/>
+      <path d="M50 62 C35 55 22 40 20 22 C35 28 46 42 50 62Z" opacity=".8"/>
+      <path d="M50 62 C65 55 78 40 80 22 C65 28 54 42 50 62Z" opacity=".8"/>
+    </g>
+  </svg>
+
+  <div class="wrap">
+    <div class="poster">
+      <img src="poster.jpg" alt="옥련여고 교복 캠페인 포스터">
+      <p>오늘도 더 좋은 내가 되는 중 ♡</p>
+    </div>
+
+    <div class="intro">
+      <img class="avatar" src="avatar.png" alt="캠페인 캐릭터 연정이">
+      <div>
+        <p class="title-small">연정이와 교복 이야기 ♡</p>
+        <h1 class="title">연정, 지금도 <em>더 빛나는 우리</em></h1>
+        <p class="school">옥련여자고등학교 학생회 교복 캠페인</p>
+      </div>
+    </div>
+
+    <div class="chat-card">
+      <div class="chat-head">
+        <img src="avatar.png" alt="">
+        교복 고민, 연정이에게 물어보세요
+        <span>편하게 말 걸어줘!</span>
+      </div>
+      <iframe
+        src="https://copilotstudio.microsoft.com/environments/Default-9ef36566-f756-4f11-9c5f-307c10f409f9/bots/cre46_untitledagent_pXyJXc/webchat?__version__=2&enableFileAttachment=false&cliAgent=true"
+        title="교복 캠페인 챗봇"></iframe>
+    </div>
+
+    <footer>좋은 사람이 좋은 세상을 만듭니다 · 옥련여자고등학교</footer>
+  </div>
+</body>
+</html>
